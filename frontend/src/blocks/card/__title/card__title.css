@@ -1,0 +1,40 @@
+.card__title {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    color: rgba(0, 0, 0);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 190px;
+}
+
+@media (max-width: 1279px) {
+    .card__title {
+        font-size: max(2vw, min(24px));
+
+    }
+}
+
+@media (max-width: 870px) {
+    .card__title {
+        width: max(19.54vw, min(130px));
+
+    }
+}
+
+@media (max-width: 690px) {
+    .card__title {
+        width: max(27.54vw, min(130px));
+
+    }
+}
+
+@media (max-width: 450px) {
+    .card__title {
+        min-width: 190px;
+    }
+}

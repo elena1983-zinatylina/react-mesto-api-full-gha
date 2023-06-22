@@ -1,0 +1,7 @@
+.popup__content_tooltip {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 60px 36px;
+    text-align: center;
+}
