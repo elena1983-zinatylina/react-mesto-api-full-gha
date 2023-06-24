@@ -1,3 +1,4 @@
+import React from 'react';
 function Footer({ loggedIn }) {
     return (
         <footer className={loggedIn ? 'footer' : 'footer_invisible'}>
