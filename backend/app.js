@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const auth = require('./middlewares/auth');
+const cors = require('cors');
 const { createUser, login } = require('./controllers/users');
 const { signinValidator, signupValidator } = require('./middlewares/validation');
 const NotFoundError = require('./utils/errors/NotFoundError');
@@ -12,7 +13,7 @@ const NotFoundError = require('./utils/errors/NotFoundError');
 const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1/mestodb' } = process.env;
 
 const app = express();
-
+app.use(cors());
 mongoose.connect(MONGO_URL)
   .then(() => console.log('База данных подключена'))
   .catch((err) => console.log('Ошибка подключения к БД', err));
