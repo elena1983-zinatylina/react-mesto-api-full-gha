@@ -1,0 +1,40 @@
+.profile__add-button {
+    max-width: 150px;
+    height: 50px;
+    width: 100%;
+    background: url(../../../images/button-add.svg) center;
+    padding: 0;
+    background-repeat: no-repeat;
+    margin: 0 0 0 244px;
+    border: 2px solid rgba(255, 255, 255);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.profile__add-button:hover {
+    opacity: 0.6;
+}
+
+
+@media (max-width: 1279px) {
+    .profile__add-button {
+        min-width: 100px;
+        margin: 0 0 0 15%;
+    }
+}
+
+@media (max-width: 767px) {
+    .profile__add-button {
+        max-width: 282px;
+        max-height: 50px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 451px) {
+    .profile__add-button {
+        max-width: 282px;
+        max-height: 50px;
+        margin: 0;
+    }
+}
