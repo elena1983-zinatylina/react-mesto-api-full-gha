@@ -86,7 +86,7 @@ class Api {
 const api = new Api({
   baseUrl: 'https://zee.domainname.studen.nomoreparties.sbs',
   headers: {
-    "authorization": 'dbb1bb43-1b72-40d9-a456-fa264cdb846f',
+    "authorization": '',
     'Content-Type': 'application/json'
   }
 });
