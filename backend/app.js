@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { createUser, login } = require('./controllers/users');
 const { signinValidator, signupValidator } = require('./middlewares/validation');
@@ -25,6 +26,8 @@ mongoose.set({ runValidators: true });
 // подключаю парсеры
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -45,6 +48,8 @@ app.use('/', cardRouter);
 app.all('/*', (req, res, next) => {
   next(new NotFoundError('Страница не существует'));
 });
+
+app.use(errorLogger);
 
 // обработчики ошибок
 app.use(errors());
