@@ -11,6 +11,6 @@
 
 IP-адрес 158.160.102.180
 
-Frontend https://zee.domainname.studen.nomoreparties.sbs
+Frontend https://zee.domainname.studen.nomoreparties.sbs/
 
-Backend https://api.zee.domainname.studen.nomoreparties.sbs
+Backend https://api.zee.domainname.studen.nomoreparties.sbs/
