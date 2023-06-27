@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.102.180
+IP 158.160.102.18;
 
 Frontend https://zee.domainname.studen.nomoreparties.sbs/
 
