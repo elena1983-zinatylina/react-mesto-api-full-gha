@@ -162,7 +162,7 @@ function App() {
     const handleSignOut = () => {
         setLoggedIn(false);
         setEmail('');
-        api.setToken(null);
+       // api.setToken(null);
         localStorage.removeItem('jwt')
         navigate('/sign-in');
     }
