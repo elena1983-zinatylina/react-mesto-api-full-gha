@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.zee.domainname.studen.nomoreparties.sbs/';
+export const BASE_URL = 'https://api.zee.domainname.studen.nomoreparties.sbs';
 
 const validateQuery = (res) => {
     if (res.ok) {
