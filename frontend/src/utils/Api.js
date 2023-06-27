@@ -84,9 +84,9 @@ class Api {
   }
 }
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-61',
+  baseUrl: 'https://api.zee.domainname.studen.nomoreparties.sbs/',
   headers: {
-    "authorization": 'dbb1bb43-1b72-40d9-a456-fa264cdb846f',
+    "authorization": '',
     'Content-Type': 'application/json'
   }
 });
