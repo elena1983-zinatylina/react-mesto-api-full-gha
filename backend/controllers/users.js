@@ -10,7 +10,7 @@ const { NODE_ENV, JWT_SECRET = 'JWT_SECRET' } = process.env;
 
 const getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.status(STATUS_CODES.OK).send({ users }))
+    .then((users) => res.status(STATUS_CODES.OK).send(users))
     .catch(next);
 };
 
@@ -69,7 +69,7 @@ const findCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (user) {
-        res.status(STATUS_CODES.OK).send({ data: user });
+        res.status(STATUS_CODES.OK).send(user);
       } else {
         next(new NotFoundError('Пользователь не найден'));
       }
@@ -88,7 +88,7 @@ const getUserById = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }
-      res.status(STATUS_CODES.OK).send({ data: user });
+      res.status(STATUS_CODES.OK).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
