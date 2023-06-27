@@ -162,6 +162,7 @@ function App() {
     const handleSignOut = () => {
         setLoggedIn(false);
         setEmail('');
+        api.setToken(null);
         localStorage.removeItem('jwt')
         navigate('/sign-in');
     }
@@ -172,6 +173,7 @@ function App() {
             auth.checkToken(token)
                 .then((res) => {
                     if (res && res.data) {
+                        api.setToken(token);
                         setLoggedIn(true);
                         setCurrentUser({ ...currentUser, email: res.data.email });
                         navigate('/');
@@ -209,6 +211,7 @@ function App() {
                 if (res && res.token) {
                     setCurrentUser({ ...currentUser, email: loginData.email })
                     localStorage.setItem('jwt', res.token);
+                    api.setToken(res.token);
                     setLoggedIn(true);
                 }
             })

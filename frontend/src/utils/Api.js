@@ -1,7 +1,7 @@
 class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl
-    this._headers = options.headers
+  constructor({ url, headers }) {
+    this._url = url;
+    this._headers = headers;
   }
 
   _validateQuery(res) {
@@ -11,78 +11,88 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-  // карточеки с сервера
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
-    })
-      .then(res => this._validateQuery(res));
+  
+  /**Установить токен*/
+  setToken(token) {
+    this._headers.Authorization = `Bearer ${token}`;
   }
 
+  // карточеки с сервера
+  getInitialCards() {
+    return fetch(`${this._url}/cards`, { headers: this._headers })
+    .then(this._validateQuery)
+}
+
   // новые карточки 
-  addCard(data) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link
+  addCard({ name, link }) {
+    return fetch(`${this._url}/cards`,
+      {
+        method: 'POST',
+        headers: this._headers,
+        body: JSON.stringify({ name, link })
       })
-    })
-      .then(res => this._validateQuery(res));
+      .then(this._validateQuery)
   }
 
   // Удаление карточки
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then(res => this._validateQuery(res))
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`,
+      {
+        method: 'DELETE',
+        headers: this._headers
+      })
+      .then(this._validateQuery)
   }
 
   // like/dislike
-  changeLike(cardId, isLiked) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: `${!isLiked ? 'DELETE' : 'PUT'}`,
-      headers: this._headers
-    })
-      .then(res => this._validateQuery(res))
+  changeLike(id, isLiked) {
+    if (isLiked) {
+      return fetch(`${this._url}/cards/${id}/likes`,
+        {
+          method: 'PUT',
+          headers: this._headers,
+        })
+        .then(this._validateQuery)
+    } else {
+      return fetch(`${this._url}/cards/${id}/likes`,
+        {
+          method: 'DELETE',
+          headers: this._headers,
+        })
+        .then(this._validateQuery)
+    }
   }
 
   // Получение информации о пользователе с сервера
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
-    })
-      .then(res => this._validateQuery(res));
+    getUserInfo() {
+    return fetch(`${this._url}/users/me`, { headers: this._headers })
+      .then(this._validateQuery)
   }
 
+
   // Редактирование информации о пользователе 
-  updateUserInfo(data) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about
+  updateUserInfo({ name, about }) {
+    return fetch(`${this._url}/users/me`,
+      {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({ name, about })
       })
-    })
-      .then(res => this._validateQuery(res))
+      .then(this._validateQuery)
   }
 
   // Редактирование аватара пользователя через попап
-  changeAvatar(link) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: link
+  changeAvatar({ avatar }) {
+    return fetch(`${this._url}/users/me/avatar`,
+      {
+        headers: this._headers,
+        method: 'PATCH',
+        body: JSON.stringify({ avatar })
       })
-    })
-      .then(res => this._validateQuery(res))
+      .then(this._validateQuery)
   }
 }
+
 const api = new Api({
   baseUrl: 'https://api.zee.domainname.studen.nomoreparties.sbs',
   headers: {
