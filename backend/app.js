@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const auth = require('./middlewares/auth');
-const cors = require('cors');
+
 const { createUser, login } = require('./controllers/users');
 const { signinValidator, signupValidator } = require('./middlewares/validation');
 const NotFoundError = require('./utils/errors/NotFoundError');
