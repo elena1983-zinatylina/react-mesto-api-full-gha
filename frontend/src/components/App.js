@@ -40,8 +40,8 @@ function App() {
     React.useEffect(() => {
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getInitialCards()])
-                .then(([data, cards]) => {
-                    setCurrentUser({ ...currentUser, ...data });
+                .then(([Userdata, cards]) => {
+                    setCurrentUser(Userdata );
                     setCards(cards);
                 })
                 .catch((err) => {
@@ -114,7 +114,7 @@ function App() {
         api.changeLike(card._id, !isLiked)
             .then((newCard) => {
                 setCards((state) =>
-                    state.map((c) => (c._id === card._id ? newCard : c))
+                    (state.map((c) => c._id === card._id ? newCard : c))
                 );
             })
             .catch((err) => {
@@ -126,7 +126,7 @@ function App() {
 
         api.deleteCard(selectedCard._id)
             .then(() => {
-                setCards((state) => state.filter((c) => c._id !== selectedCard._id));
+                setCards((cards) => cards.filter((item) => item._id !== selectedCard._id));
                 closeAllPopups();
             })
             .catch(err => console.log(err));
@@ -134,28 +134,28 @@ function App() {
 
     const handleUpdateUser = (userData) => {
         api.updateUserInfo(userData)
-            .then(res => {
-                setCurrentUser(res);
+        .then((userDataServer) => {
+            setCurrentUser({ ...currentUser, ...userDataServer })
                 closeAllPopups();
             })
             .catch(err => console.log(err))
     }
 
-    const handleAddCard = (cardData) => {
-        api.addCard(cardData)
-            .then(res => {
-                setCards([res, ...cards]);
-                closeAllPopups();
-            })
+    const handleAddCard = (card) => {
+        api.addCard(card)
+        .then((newCard) => {
+            setCards([newCard, ...cards]);
+            closeAllPopups();
+          })
             .catch(err => console.log(err))
     }
 
-    const handleUpdateAvatar = (link) => {
-        api.changeAvatar(link)
-            .then(res => {
-                setCurrentUser(res);
-                closeAllPopups();
-            })
+    function handleUpdateAvatar(userAvatar) {
+        api.updateUserAvatar(userAvatar)
+          .then((userAvatarServer) => {
+            setCurrentUser({ ...currentUser, ...userAvatarServer })
+            closeAllPopups()
+          })
             .catch(err => console.log(err))
     }
 
@@ -164,7 +164,7 @@ function App() {
         //setEmail('');
         api.setToken(null);
         localStorage.removeItem('jwt')
-        navigate('/sign-in');
+        //navigate('/sign-in');
     }
 
     function checkToken() {
@@ -175,7 +175,7 @@ function App() {
                     if (res && res.data) {
                         api.setToken(token);
                         setLoggedIn(true);
-                        setCurrentUser({ ...currentUser, email: res.data.email });
+                       // setCurrentUser({ ...currentUser, email: res.data.email });
                         navigate('/');
                     }
                 })
@@ -189,32 +189,28 @@ function App() {
     /**Зарегистрировать пользователя*/
     function handleRegister(regData) {
         auth.register(regData)
-            .then((res) => {
-               
-                    navigate('/sign-in');
-                    setInfoSuccess(true); // статус регистрации
-                    return res;
-                })
-                .catch((err) => {
-                    setInfoSuccess(false); // статус регистрации
-                    console.log(err); 
-                })
-                .finally(() => {
-                    setRegisterSuccess(true); //открываем попап
-                });
-    };
+        .then((res) => {
+            if (res && res.data) {
+              navigate('/sign-in');
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      };
 
     /**Войти в профиль*/
     function handleLogin(loginData) {
         auth.authorize(loginData)
             .then((res) => {
                 if (res && res.token) {
-                    setCurrentUser({ ...currentUser, email: loginData.email })
-                    localStorage.setItem('jwt', res.token);
-                    api.setToken(res.token);
-                    setLoggedIn(true);
-                }
-            })
+                    setCurrentUser(currentUser)
+          localStorage.setItem('jwt', res.token);
+          api.setToken(res.token);
+          setLoggedIn(true);
+          navigate('/');
+        }
+      })
             .catch((err) => {
                 setInfoSuccess(false); // статус регистрации
                 setRegisterSuccess(true); //открываем попап

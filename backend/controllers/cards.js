@@ -13,14 +13,14 @@ const getCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
-  return Card.create({ name, link, owner: req.user._id })
+   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.status(STATUS_CODES.CREATED).send(card))
     // данные не записались, вернём ошибку
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Введены некорректные данные'));
+         next(new BadRequestError('Введены некорректные данные'));
       }
-      return next(err);
+       next(err);
     });
 };
 
