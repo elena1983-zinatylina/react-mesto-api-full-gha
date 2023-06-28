@@ -38,11 +38,11 @@ function App() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        const token = localStorage.getItem('jwt');
+       // const token = localStorage.getItem('jwt');
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getInitialCards()])
                 .then(([Userdata, cards]) => {
-                    setCurrentUser(Userdata );
+                    setCurrentUser(Userdata);
                     setCards(cards);
                 })
                 .catch((err) => {
@@ -162,10 +162,9 @@ function App() {
 
     const handleSignOut = () => {
         setLoggedIn(false);
-        //setEmail('');
-        api.setToken(null);
+        setEmail('');
         localStorage.removeItem('jwt')
-        //navigate('/sign-in');
+        navigate('/sign-in');
     }
 
     function checkToken() {
@@ -191,14 +190,19 @@ function App() {
     function handleRegister(regData) {
         auth.register(regData)
         .then((res) => {
-            if (res && res.data) {
-              navigate('/sign-in');
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      };
+               
+            navigate('/sign-in');
+            setInfoSuccess(true); // статус регистрации
+            return res;
+        })
+        .catch((err) => {
+            setInfoSuccess(false); // статус регистрации
+            console.log(err); 
+        })
+        .finally(() => {
+            setRegisterSuccess(true); //открываем попап
+        });
+};
 
     /**Войти в профиль*/
     function handleLogin(loginData) {
@@ -207,14 +211,13 @@ function App() {
                 if (res && res.token) {
                     setCurrentUser(currentUser)
           localStorage.setItem('jwt', res.token);
-          api.setToken(res.token);
           setLoggedIn(true);
           navigate('/');
         }
       })
             .catch((err) => {
-                //setInfoSuccess(false); // статус регистрации
-               // setRegisterSuccess(true); //открываем попап
+                setInfoSuccess(false); // статус регистрации
+               setRegisterSuccess(true); //открываем попап
                 console.log(err);
             })
     };
