@@ -38,11 +38,10 @@ function App() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-       // const token = localStorage.getItem('jwt');
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getInitialCards()])
-                .then(([Userdata, cards]) => {
-                    setCurrentUser(Userdata);
+            .then(([userData, cards]) => {
+                setCurrentUser(userData);;
                     setCards(cards);
                 })
                 .catch((err) => {
@@ -110,12 +109,12 @@ function App() {
     };
 
     function handleCardLike(card) {
-        const isLiked = card.likes.some((id) => id === currentUser._id);
+        const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
         api.changeLike(card._id, !isLiked)
             .then((newCard) => {
                 setCards((state) =>
-                    (state.map((c) => c._id === card._id ? newCard : c))
+                    state.map((c) => (c._id === card._id ? newCard : c))
                 );
             })
             .catch((err) => {
@@ -127,7 +126,7 @@ function App() {
 
         api.deleteCard(selectedCard._id)
             .then(() => {
-                setCards((cards) => cards.filter((item) => item._id !== selectedCard._id));
+                setCards((state) => state.filter((c) => c._id !== selectedCard._id));
                 closeAllPopups();
             })
             .catch(err => console.log(err));
@@ -135,34 +134,35 @@ function App() {
 
     const handleUpdateUser = (userData) => {
         api.updateUserInfo(userData)
-        .then((userDataServer) => {
-            setCurrentUser({ ...currentUser, ...userDataServer })
+            .then(res => {
+                setCurrentUser(res);
                 closeAllPopups();
             })
             .catch(err => console.log(err))
     }
 
-    const handleAddCard = (card) => {
-        api.addCard(card)
-        .then((newCard) => {
-            setCards([newCard, ...cards]);
-            closeAllPopups();
-          })
+    const handleAddCard = (cardData) => {
+        api.addCard(cardData)
+            .then(res => {
+                setCards([res, ...cards]);
+                closeAllPopups();
+            })
             .catch(err => console.log(err))
     }
 
-    function handleUpdateAvatar(userAvatar) {
-        api.updateUserAvatar(userAvatar)
-          .then((userAvatarServer) => {
-            setCurrentUser({ ...currentUser, ...userAvatarServer })
-            closeAllPopups()
-          })
+    const handleUpdateAvatar = (link) => {
+        api.changeAvatar(link)
+            .then(res => {
+                setCurrentUser(res);
+                closeAllPopups();
+            })
             .catch(err => console.log(err))
     }
 
     const handleSignOut = () => {
         setLoggedIn(false);
         setEmail('');
+        api.setToken(null);
         localStorage.removeItem('jwt')
         navigate('/sign-in');
     }
@@ -172,10 +172,10 @@ function App() {
         if (token) {
             auth.checkToken(token)
                 .then((res) => {
-                    if (res && res.data) {
-                       // api.setToken(token);
+                    if (res) {
+                        api.setToken(token);
                         setLoggedIn(true);
-                        setCurrentUser({ ...currentUser, email: res.data.email });
+                       // setCurrentUser({ ...currentUser, email: res.data.email });
                         navigate('/');
                     }
                 })
@@ -189,20 +189,20 @@ function App() {
     /**Зарегистрировать пользователя*/
     function handleRegister(regData) {
         auth.register(regData)
-        .then((res) => {
+            .then((res) => {
                
-            navigate('/sign-in');
-            setInfoSuccess(true); // статус регистрации
-            return res;
-        })
-        .catch((err) => {
-            setInfoSuccess(false); // статус регистрации
-            console.log(err); 
-        })
-        .finally(() => {
-            setRegisterSuccess(true); //открываем попап
-        });
-};
+                    navigate('/sign-in');
+                    setInfoSuccess(true); // статус регистрации
+                    return res;
+                })
+                .catch((err) => {
+                    setInfoSuccess(false); // статус регистрации
+                    console.log(err); 
+                })
+                .finally(() => {
+                    setRegisterSuccess(true); //открываем попап
+                });
+    };
 
     /**Войти в профиль*/
     function handleLogin(loginData) {
@@ -210,14 +210,13 @@ function App() {
             .then((res) => {
                 if (res && res.token) {
                     setCurrentUser(currentUser)
-          localStorage.setItem('jwt', res.token);
-          setLoggedIn(true);
-          navigate('/');
-        }
-      })
+                    localStorage.setItem('jwt', res.token);
+                    setLoggedIn(true);
+                }
+            })
             .catch((err) => {
                 setInfoSuccess(false); // статус регистрации
-               setRegisterSuccess(true); //открываем попап
+                setRegisterSuccess(true); //открываем попап
                 console.log(err);
             })
     };
