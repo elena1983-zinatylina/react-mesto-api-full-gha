@@ -38,6 +38,7 @@ function App() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        const token = localStorage.getItem('jwt');
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getInitialCards()])
                 .then(([Userdata, cards]) => {
