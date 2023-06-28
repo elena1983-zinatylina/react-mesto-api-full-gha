@@ -206,7 +206,7 @@ function App() {
 
     /**Войти в профиль*/
     function handleLogin(loginData) {
-        auth.authorize(loginData)
+        auth.login(loginData)
             .then((res) => {
                 if (res && res.token) {
                     setCurrentUser(currentUser)
