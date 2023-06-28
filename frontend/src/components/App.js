@@ -217,7 +217,7 @@ function App() {
       })
             .catch((err) => {
                 setInfoSuccess(false); // статус регистрации
-               setRegisterSuccess(true); //открываем попап
+               setRegisterSuccess(false); //открываем попап
                 console.log(err);
             })
     };
