@@ -17,7 +17,7 @@ export function register(data) {
     })
         .then(response => validateQuery(response))
 };
-export function authorize  (data)  {
+export function login  (data)  {
     return fetch(`${BASE_URL}/signin`, {
       method: 'POST',
       headers: {
