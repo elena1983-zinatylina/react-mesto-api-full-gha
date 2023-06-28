@@ -173,7 +173,7 @@ function App() {
             auth.checkToken(token)
                 .then((res) => {
                     if (res && res.data) {
-                        api.setToken(token);
+                       // api.setToken(token);
                         setLoggedIn(true);
                        // setCurrentUser({ ...currentUser, email: res.data.email });
                         navigate('/');
