@@ -175,7 +175,7 @@ function App() {
                     if (res && res.data) {
                        // api.setToken(token);
                         setLoggedIn(true);
-                       // setCurrentUser({ ...currentUser, email: res.data.email });
+                        setCurrentUser({ ...currentUser, email: res.data.email });
                         navigate('/');
                     }
                 })
