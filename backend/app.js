@@ -17,6 +17,7 @@ const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process
 
 const app = express();
 app.use(cors());
+
 mongoose.connect(MONGO_URL)
   .then(() => console.log('База данных подключена'))
   .catch((err) => console.log('Ошибка подключения к БД', err));

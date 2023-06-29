@@ -40,8 +40,8 @@ function App() {
     React.useEffect(() => {
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getInitialCards()])
-            .then(([userData, cards]) => {
-                setCurrentUser(userData);;
+                .then(([userData, cards]) => {
+                    setCurrentUser(userData);;
                     setCards(cards);
                 })
                 .catch((err) => {
@@ -175,13 +175,13 @@ function App() {
                     if (res) {
                         api.setToken(token);
                         setLoggedIn(true);
-                      setCurrentUser(currentUser);
+                        setCurrentUser(currentUser);
                         navigate('/');
                     }
                 })
                 .catch((err) => {
                     console.log(err);
-                    
+
                 })
         }
     };
@@ -190,18 +190,18 @@ function App() {
     function handleRegister(regData) {
         auth.register(regData)
             .then((res) => {
-               
-                    navigate('/sign-in');
-                    setInfoSuccess(true); // статус регистрации
-                    return res;
-                })
-                .catch((err) => {
-                    setInfoSuccess(false); // статус регистрации
-                    console.log(err); 
-                })
-                .finally(() => {
-                    setRegisterSuccess(true); //открываем попап
-                });
+
+                navigate('/sign-in');
+                setInfoSuccess(true); // статус регистрации
+                return res;
+            })
+            .catch((err) => {
+                setInfoSuccess(false); // статус регистрации
+                console.log(err);
+            })
+            .finally(() => {
+                setRegisterSuccess(true); //открываем попап
+            });
     };
 
     /**Войти в профиль*/
@@ -211,7 +211,9 @@ function App() {
                 if (res && res.token) {
                     setCurrentUser(currentUser)
                     localStorage.setItem('jwt', res.token);
+                    api.setToken(res.token);
                     setLoggedIn(true);
+                    navigate('/');
                 }
             })
             .catch((err) => {
