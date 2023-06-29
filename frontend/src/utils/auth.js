@@ -17,7 +17,7 @@ export function register(data) {
     })
         .then(response => validateQuery(response))
 };
-export function login  (data)  {
+export function login(data)  {
     return fetch(`${BASE_URL}/signin`, {
       method: 'POST',
       headers: {
@@ -25,13 +25,7 @@ export function login  (data)  {
       },
       body: JSON.stringify(data)
     })
-        .then(response => validateQuery(response))
-        .then((data) => {
-            if (data.token){
-                localStorage.setItem('token', data.token);
-                return data;
-            }
-        })
+    .then(validateQuery)
 };
 export function checkToken(token) {
   return fetch(`${BASE_URL}/users/me`, {
