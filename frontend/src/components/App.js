@@ -210,6 +210,7 @@ function App() {
             .then((res) => {
                 if (res && res.token) {
                     setCurrentUser(currentUser)
+                    console.log(res, res.token);
                     localStorage.setItem('jwt', res.token);
                     api.setToken(res.token);
                     setLoggedIn(true);
