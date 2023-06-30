@@ -1,0 +1,17 @@
+.card__mask-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 22px 15px 24px 21px;
+    align-items: center;
+    max-width: 246px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 320px) {
+    .card__mask-group {
+        margin: 19px 15px 25px 21px;
+    }
+}
