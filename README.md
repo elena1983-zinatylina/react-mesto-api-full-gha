@@ -5,12 +5,12 @@
   
 
 
-Адрес репозитория: https://elena1983-zinatylina.github.io/react-mesto-api-full-gha/
+Адрес репозитория: https://elena1983-zinatylina.github.io/react-mesto-api-full-gha
 
 ## Ссылки на проект
 
 IP 158.160.102.18;
 
-Frontend https://zee.domainname.studen.nomoreparties.sbs/
+Frontend https://zee.domainname.studen.nomoreparties.sbs
 
-Backend https://api.zee.domainname.studen.nomoreparties.sbs/
+Backend https://api.zee.domainname.studen.nomoreparties.sbs
