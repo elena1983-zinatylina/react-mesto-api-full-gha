@@ -150,8 +150,8 @@ function App() {
             .catch(err => console.log(err))
     }
 
-    const handleUpdateAvatar = (userAvatar) => {
-        api.changeAvatar(userAvatar)
+    const handleUpdateAvatar = (link) => {
+        api.changeAvatar(link)
         .then((userAvatarServer) => {
             setCurrentUser({ ...currentUser, ...userAvatarServer })
                 closeAllPopups();
@@ -207,23 +207,21 @@ function App() {
     /**Войти в профиль*/
     function handleLogin(loginData) {
         auth.login(loginData)
-            .then((res) => {
-                if (res && res.token) {
-                    setCurrentUser(currentUser)
-                    console.log(res, res.token);
-                    localStorage.setItem('jwt', res.token);
+        .then((res) => {
+            if (res && res.token) {
+                setCurrentUser({ ...currentUser, email: loginData.email })
+                localStorage.setItem('jwt', res.token);
                     api.setToken(res.token);
                     setLoggedIn(true);
                     navigate('/');
                 }
             })
             .catch((err) => {
-                setInfoSuccess(false); // статус регистрации
+               setInfoSuccess(false); // статус регистрации
+               setRegisterSuccess(true); //открываем попап
                 console.log(err);
+                //setRegisterSuccess(false);
             })
-            .finally(() => {
-                setRegisterSuccess(true); //открываем попап
-            });
     };
 
     return (

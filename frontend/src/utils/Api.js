@@ -84,12 +84,12 @@ class Api {
   }
 
   // Редактирование аватара пользователя через попап
-  changeAvatar({ avatar }) {
+  changeAvatar( link ) {
     return fetch(`${this._url}/users/me/avatar`,
       {
         headers: this._headers,
         method: 'PATCH',
-        body: JSON.stringify({ avatar })
+        body: JSON.stringify({ avatar: link })
       })
       .then(this._validateQuery)
   }
