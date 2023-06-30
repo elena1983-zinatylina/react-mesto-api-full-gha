@@ -134,8 +134,8 @@ function App() {
 
     const handleUpdateUser = (userData) => {
         api.updateUserInfo(userData)
-        .then((userDataServer) => {
-            setCurrentUser({ ...currentUser, ...userDataServer })
+        .then(res => {
+            setCurrentUser(res);
                 closeAllPopups();
             })
             .catch(err => console.log(err))
@@ -152,8 +152,8 @@ function App() {
 
     const handleUpdateAvatar = (link) => {
         api.changeAvatar(link)
-        .then((userAvatarServer) => {
-            setCurrentUser({ ...currentUser, ...userAvatarServer })
+        .then(res => {
+            setCurrentUser(res);
                 closeAllPopups();
             })
             .catch(err => console.log(err))
