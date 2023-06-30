@@ -134,8 +134,8 @@ function App() {
 
     const handleUpdateUser = (userData) => {
         api.updateUserInfo(userData)
-            .then(res => {
-                setCurrentUser(res);
+        .then((userDataServer) => {
+            setCurrentUser({ ...currentUser, ...userDataServer })
                 closeAllPopups();
             })
             .catch(err => console.log(err))
@@ -150,10 +150,10 @@ function App() {
             .catch(err => console.log(err))
     }
 
-    const handleUpdateAvatar = (link) => {
-        api.changeAvatar(link)
-            .then(res => {
-                setCurrentUser(res);
+    const handleUpdateAvatar = (userAvatar) => {
+        api.changeAvatar(userAvatar)
+        .then((userAvatarServer) => {
+            setCurrentUser({ ...currentUser, ...userAvatarServer })
                 closeAllPopups();
             })
             .catch(err => console.log(err))
@@ -218,11 +218,12 @@ function App() {
                 }
             })
             .catch((err) => {
-               setInfoSuccess(false); // статус регистрации
-               setRegisterSuccess(true); //открываем попап
+                setInfoSuccess(false); // статус регистрации
                 console.log(err);
-                //setRegisterSuccess(false);
             })
+            .finally(() => {
+                setRegisterSuccess(true); //открываем попап
+            });
     };
 
     return (

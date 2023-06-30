@@ -65,7 +65,9 @@ class Api {
 
   // Получение информации о пользователе с сервера
     getUserInfo() {
-    return fetch(`${this._url}/users/me`, { headers: this._headers })
+    return fetch(`${this._url}/users/me`, 
+    { 
+      headers: this._headers })
       .then(this._validateQuery)
   }
 
