@@ -35,5 +35,5 @@ export function checkToken(token) {
         'Authorization': `Bearer ${token}`,
       }
     })
-        .then(res => validateQuery(res))
+    .then(validateQuery)
 }

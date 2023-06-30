@@ -49,7 +49,7 @@ function App() {
                     setRegisterSuccess(false);
                 })
         }
-        checkToken();
+        //checkToken();
     }, [loggedIn]);
 
     function renderLoading() {
@@ -183,8 +183,11 @@ function App() {
                     console.log(err);
 
                 })
-        }
-    };
+            }
+        };
+        useEffect(() => {
+          checkToken();
+        }, []);
 
     /**Зарегистрировать пользователя*/
     function handleRegister(regData) {
